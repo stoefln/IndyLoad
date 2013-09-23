@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="js/processing.js"></script>
+  <link rel="stylesheet" href="css/style.css"/></head>
+<body>
+<h2>Loading Indicator</h2>
+
+<script type="application/processing">
+                 
+float width, height;
+float lastX1, lastY1, lastX2, lastY2;
+float thickness = 30;
+
+void setup() {
+ 
+  height = 750;
+  width = height;
+  
+  size(width,height);
+  smooth(); 
+  noStroke();//strokeWeight(0.0);
+  //stroke(0, 100);
+  drawIndicator();
+}
+
+
+void drawIndicator() {
+
+  background(0,0,0,0);
+  double radius = (double) width /2 - 20;
+  int center = width / 2;
+  float strokeTrans = 1;
+  float piX2 = Math.PI * 2;
+
+
+  for(float p=0; p < piX2;p+=piX2/100){
+    
+    
+    float x1 = center + Math.sin(p) * radius;
+    float y1 = center + Math.cos(p) * radius;
+    
+    float x2 = center + Math.sin(p) * (radius - thickness);
+    float y2 = center + Math.cos(p) * (radius - thickness);
+    
+    if(p > 0){
+        strokeTrans = (float) 255 * (float) (1 - p/piX2 );
+        fill(255, strokeTrans);
+        quad(x1, y1, x2, y2, lastX2, lastY2, lastX1, lastY1);
+        
+    }
+    lastX1 = x1;
+    lastY1 = y1;
+    
+    lastX2 = x2;
+    lastY2 = y2;
+  }
+  save("spinner.png");
+}
+
+
+
+</script><canvas style="background-image: url(http://p1.pichost.me/i/23/1460437.jpg);" width="200" height="200"></canvas></p>
+
+
+</body>
+</html>
